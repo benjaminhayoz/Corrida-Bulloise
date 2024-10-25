@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>🐂 Corrida bulloise 🏃‍♂️</title>
+    <!-- Inclusion de Chart.js depuis un CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Inclusion de la police 'Roboto' depuis Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Styles généraux */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f3f5;
+        }
+
+        header {
+            background-color: #34495e;
+            color: #ecf0f1;
+            padding: 20px 10px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 span {
+            margin: 0 10px;
+        }
+
+        /* Styles pour les onglets */
+        .tab {
+            overflow: hidden;
+            background-color: #2c3e50;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .tab button {
+            background-color: inherit;
+            color: #ecf0f1;
+            padding: 14px 16px;
+            border: none;
+            cursor: pointer;
+            font-size: 17px;
+            flex-grow: 1;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .tab button:hover {
+            background-color: #1abc9c;
+        }
+
+        .tab button.active {
+            background-color: #16a085;
+        }
+
+        /* Styles pour le contenu des onglets */
+        .tabcontent {
+            display: none;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .tabcontent.active {
+            display: block;
+        }
+
+        /* Styles pour les séances */
+        .session {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .session h3 {
+            background-color: #2980b9;
+            color: #fff;
+            margin: 0;
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 1.1em;
+        }
+
+        .session h3 span {
+            margin-right: 10px;
+        }
+
+        .details {
+            display: none;
+            padding: 10px;
+            background-color: #ecf0f1;
+        }
+
+        /* Styles pour l'analyse */
+        .analysis-section {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+
+        .analysis-input label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .analysis-input input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        .analyze-button, .reset-button {
+            padding: 10px 20px;
+            background-color: #e67e22;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            width: 48%;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .reset-button {
+            background-color: #c0392b;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chart-container {
+            margin-top: 30px;
+        }
+
+        .session-counter {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #2c3e50;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .tab button {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .analyze-button, .reset-button {
+                font-size: 0.9em;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .session h3 {
+                font-size: 1em;
+            }
+        }
+
+        /* Ajustements spécifiques pour l'iPhone 11 */
+        @media only screen and (max-device-width: 414px) and (orientation: portrait) {
+            .tab button {
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .session h3 {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><span>🐂</span>Corrida bulloise<span>🏃‍♂️</span></h1>
+</header>
+
+<!-- Onglets -->
+<div class="tab">
+    <button class="tablinks active" onclick="openTab(event, 'Semaine1')">Semaine 1</button>
+    <button class="tablinks" onclick="openTab(event, 'Semaine2')">Semaine 2</button>
+    <button class="tablinks" onclick="openTab(event, 'Semaine3')">Semaine 3</button>
+    <button class="tablinks" onclick="openTab(event, 'Semaine4')">Semaine 4</button>
+    <button class="tablinks" onclick="openTab(event, 'Semaine5')">Semaine 5</button>
+    <button class="tablinks" onclick="openTab(event, 'Analyse')">Analyse</button>
+</div>
+
+<!-- Contenu des onglets -->
+
+<!-- Semaine 1 -->
+<div id="Semaine1" class="tabcontent active">
+    <h2>Semaine 1 (13 - 19 octobre)</h2>
+    <h3>Total approximatif : 23 km</h3>
+    <!-- Mardi -->
+    <div class="session">
+        <h3><span>❤️</span> Endurance Fondamentale - Mardi</h3>
+        <div class="details">
+            <p><strong>Contenu :</strong> 7 km en endurance fondamentale (zones 1-2).</p>
+            <p><strong>Objectif :</strong> Travailler l'endurance de base.</p>
+        </div>
+    </div>
+    <!-- Jeudi -->
+    <div class="session">
+        <h3><span>⚡</span> VMA Courte + Allure Course - Jeudi</h3>
+        <div class="details">
+            <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
+            <p><strong>Exercice principal :</strong> 8 x 200 m à 105% VMA (3:26 min/km) avec 1 min de récupération en trottinant.</p>
+            <p><strong>Allure Course :</strong> 1 km à allure cible (4:03 min/km).</p>
+            <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
+            <p><strong>Objectif :</strong> Améliorer la VMA et se familiariser avec l'allure de course.</p>
+        </div>
+    </div>
+    <!-- Dimanche -->
+    <div class="session">
+        <h3><span>🏃‍♂️</span> Sortie Longue avec Allure de Course - Dimanche</h3>
+        <div class="details">
+            <p><strong>Contenu :</strong></p>
+            <ul>
+                <li>5 km en EF (zones 1-2)</li>
+                <li>2 km à allure de course (4:03 min/km)</li>
+                <li>10 min de retour au calme en EF (~1.5 km)</li>
+            </ul>
+            <p><strong>Objectif :</strong> Habituer le corps à l'allure de course en fin de sortie longue et récupérer activement.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Semaine 2 -->
+<div id="Semaine2" class="tabcontent">
+    <h2>Semaine 2 (20 - 26 octobre)</h2>
+    <h3>Total approximatif : 26 km</h3>
+    <!-- Mardi -->
+    <div class="session">
+        <h3><span>❤️</span> Endurance Fondamentale - Mardi</h3>
+        <div class="details">
+            <p><strong>Contenu :</strong> 8 km en endurance fondamentale (zones 1-2).</p>
+            <p><strong>Objectif :</strong> Travailler l'endurance de base.</p>
+        </div>
+    </div>
+    <!-- Jeudi -->
+    <div class="session">
+        <h3><span>⚡</span> VMA Courte - Jeudi</h3>
+        <div class="details">
+            <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
+            <p><strong>Exercice principal :</strong> 8 x 400 m à 100% VMA (3:37 min/km) avec 1 min de récupération en trottinant.</p>
+            <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
+            <p><strong>Objectif :</strong> Améliorer la VMA et la capacité aérobie.</p>
+        </div>
+    </div>
+    <!-- Dimanche -->
+    <div class="session">
+        <h3><span>🏃‍♂️</span> Sortie Longue avec Allure Spécifique - Dimanche</h3>
+        <div class="details">
+            <p><strong>Contenu :</strong></p>
+            <ul>
+                <li>4 km en EF (zones 1-2)</li>
+                <li>2 x 2 km à allure spécifique (4:03 min/km) avec 2 minutes de récupération </li>
+                <li>10 min de retour au calme en EF (~1.5 km)</li>
+            </ul>
+            <p><strong>Objectif :</strong> Habituer votre corps à l'allure de course et récupérer activement.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Semaine 3 -->
+<div id="Semaine3" class="tabcontent">
+    <h2>Semaine 3 (27 octobre - 2 novembre)</h2>
+    <h3>Total approximatif : 30 km</h3>
+    <!-- Mardi -->
+    <div class="session">
+        <h3><span>❤️</span> Endurance Fondamentale - Mardi</h3>
+        <div class="details">
+            <p><strong>Contenu :</strong> 10 km en endurance fondamentale (zones 1-2).</p>
+            <p><strong>Objectif :</strong> Augmenter le volume d'entraînement.</p>
+        </div>
+    </div>
+    <!-- Jeudi -->
+    <div class="session">
+        <h3><span>🚀</span> Seuil - Jeudi</h3>
+        <div class="details">
+            <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
+            <p><strong>Exercice principal :</strong> 2 x 15 min à allure seuil (entre 170-177bpm).</p>
+            <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
+            <p><strong>Objectif :</strong> Améliorer le seuil lactique.</p>
+        </div>
+    </div>
+    <!-- Dimanche -->
+    <div class="session">
+        <h3><span>🏃‍♂️</span> Sortie Longue avec Allure Spécifique - Dimanche</h3>
+        <div class="details">
+            <p><strong>Contenu :</strong></p>
+            <ul>
+                <li>9 km en EF (zones 1-2)</li>
+                <li>5 km à allure spécifique (4:03 min/km)</li>
+                <li>10 min de retour au calme en EF (~1.5 km)</li>
+            </ul>
+            <p><strong>Objectif :</strong> Renforcer l'endurance et travailler l'allure de course.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Semaine 4 -->
+<div id="Semaine4" class="tabcontent">
+    <h2>Semaine 4 (3 - 9 novembre)</h2>
+    <h3>Total approximatif : 35 km</h3>
+    <!-- Mardi -->
+    <div class="session">
+        <h3><span>❤️</span> Endurance Fondamentale - Mardi</h3>
+        <div class="details">
+            <p><strong>Contenu :</strong> 12 km en endurance fondamentale (zones 1-2).</p>
+            <p><strong>Objectif :</strong> Atteindre le volume maximal tout en restant en basse intensité.</p>
+        </div>
+    </div>
+    <!-- Jeudi -->
+    <div class="session">
+        <h3><span>⚡</span> VMA Longue - Jeudi</h3>
+        <div class="details">
+            <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
+            <p><strong>Exercice principal :</strong> 5 x 800 m à 95% VMA (3:48 min/km) avec 3 min de récupération en trottinant.</p>
+            <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
+            <p><strong>Objectif :</strong> Améliorer la capacité à maintenir une allure rapide sur une distance plus longue.</p>
+        </div>
+    </div>
+    <!-- Dimanche -->
+    <div class="session">
+        <h3><span>🏃‍♂️</span> Sortie Longue avec Seuil - Dimanche</h3>
+        <div class="details">
+            <p><strong>Contenu :</strong></p>
+            <ul>
+                <li>12 km en EF (zones 1-2)</li>
+                <li>5 km à allure seuil (4:33 min/km)</li>
+                <li>10 min de retour au calme en EF (~1.5 km)</li>
+            </ul>
+            <p><strong>Objectif :</strong> Travailler l'endurance et la résistance à l'effort intense.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Semaine 5 -->
+<div id="Semaine5" class="tabcontent">
+    <h2>Semaine 5 (10 - 16 novembre)</h2>
+    <h3>Total approximatif : 23 km</h3>
+    <!-- Mardi -->
+    <div class="session">
+        <h3><span>❤️</span> Endurance Fondamentale - Mardi</h3>
+        <div class="details">
+            <p><strong>Contenu :</strong> 6 km en endurance fondamentale (zones 1-2).</p>
+            <p><strong>Objectif :</strong> Commencer la phase de relâchement pour être en forme le jour de la course.</p>
+        </div>
+    </div>
+    <!-- Jeudi -->
+    <div class="session">
+        <h3><span>🏁</span> Préparation Course - Jeudi</h3>
+        <div class="details">
+            <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
+            <p><strong>Exercice principal :</strong> 3 x 200 m à allure spécifique (4:03 min/km) avec 2 min de récupération en trottinant.</p>
+            <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
+            <p><strong>Objectif :</strong> Maintenir la vivacité sans accumuler de fatigue.</p>
+        </div>
+    </div>
+    <!-- Dimanche -->
+    <div class="session">
+        <h3><span>🏅</span> Corrida Bulloise - Dimanche</h3>
+        <div class="details">
+            <p><strong>Course :</strong> 8,4 km à allure cible de 4:03 min/km.</p>
+            <p><strong>Conseil :</strong> Gérer votre énergie, rester hydraté et profiter de l'ambiance de la course. Bonne chance !</p>
+        </div>
+    </div>
+</div>
+
+<!-- Analyse -->
+<div id="Analyse" class="tabcontent">
+    <h2>Analyse de l'Entraînement</h2>
+
+    <!-- Section pour le temps passé dans les zones cardiaques -->
+    <div class="analysis-section">
+        <div class="session-counter">
+            <p>Dernière séance ajoutée : <span id="lastZoneSession">Aucune séance ajoutée</span></p>
+        </div>
+        <div class="analysis-input">
+            <h3>Temps passé dans chaque zone cardiaque :</h3>
+            <label for="zone1">Zone 1 (hh:mm:ss) :</label>
+            <input type="text" id="zone1" placeholder="hh:mm:ss">
+            <label for="zone2">Zone 2 (hh:mm:ss) :</label>
+            <input type="text" id="zone2" placeholder="hh:mm:ss">
+            <label for="zone3">Zone 3 (hh:mm:ss) :</label>
+            <input type="text" id="zone3" placeholder="hh:mm:ss">
+            <label for="zone4">Zone 4 (hh:mm:ss) :</label>
+            <input type="text" id="zone4" placeholder="hh:mm:ss">
+            <label for="zone5">Zone 5 (hh:mm:ss) :</label>
+            <input type="text" id="zone5" placeholder="hh:mm:ss">
+            <div class="button-group">
+                <button class="analyze-button" onclick="addZoneSession()">Ajouter la séance</button>
+                <button class="reset-button" onclick="undoLastZoneSession()">Annuler la dernière entrée</button>
+            </div>
+        </div>
+        <div class="chart-container">
+            <canvas id="zoneChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Section pour les kilomètres parcourus par semaine -->
+    <div class="analysis-section">
+        <div class="session-counter">
+            <p>Dernière séance ajoutée : <span id="lastKmSession">Aucune séance ajoutée</span></p>
+        </div>
+        <div class="analysis-input">
+            <h3>Kilomètres parcourus par semaine :</h3>
+            <label for="kmSemaine">Semaine (1-5) :</label>
+            <input type="number" id="kmSemaine" placeholder="Numéro de la semaine (1-5)" min="1" max="5">
+            <label for="kmParcourus">Kilomètres parcourus :</label>
+            <input type="number" id="kmParcourus" placeholder="Nombre de kilomètres">
+            <div class="button-group">
+                <button class="analyze-button" onclick="addKmSession()">Ajouter les kilomètres</button>
+                <button class="reset-button" onclick="undoLastKmSession()">Annuler la dernière entrée</button>
+            </div>
+        </div>
+        <div class="chart-container">
+            <canvas id="kmChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Gestion des onglets
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    // Affichage des détails des séances
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.session h3').forEach(sessionHeader => {
+            sessionHeader.addEventListener('click', () => {
+                const details = sessionHeader.nextElementSibling;
+                details.style.display = details.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    });
+
+    // Variables pour stocker les temps cumulés
+    let cumulativeZone1 = 0;
+    let cumulativeZone2 = 0;
+    let cumulativeZone3 = 0;
+    let cumulativeZone4 = 0;
+    let cumulativeZone5 = 0;
+    // let sessionCountZones = 0; // Supprimé
+    let zoneSessionHistory = [];
+
+    // Variables pour les kilomètres par semaine
+    let kmPerWeek = [0, 0, 0, 0, 0];
+    // let sessionCountKm = 0; // Supprimé
+    let kmSessionHistory = [];
+
+    // Charger les données depuis le Local Storage
+    window.onload = function() {
+        loadData();
+    };
+
+    // Fonction pour convertir hh:mm:ss en secondes
+    function timeStringToSeconds(timeString) {
+        if (!timeString || timeString.trim() === '') return 0;
+        const parts = timeString.split(':');
+        let seconds = 0;
+        if (parts.length === 3) {
+            seconds = (+parts[0]) * 3600 + (+parts[1]) * 60 + (+parts[2]);
+        } else if (parts.length === 2) {
+            seconds = (+parts[0]) * 60 + (+parts[1]);
+        } else if (parts.length === 1) {
+            seconds = +parts[0];
+        }
+        return seconds;
+    }
+
+    // Fonction pour convertir des secondes en hh:mm:ss
+    function secondsToTimeString(seconds) {
+        const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+        const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+        const s = (seconds % 60).toString().padStart(2, '0');
+        return `${h}:${m}:${s}`;
+    }
+
+    // Fonction pour formater la date en "dd.mm.yyyy à hh:mm"
+    function formatDate(date) {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${day}.${month}.${year} à ${hours}:${minutes}`;
+    }
+
+    // Fonction pour ajouter une séance de zones cardiaques
+    function addZoneSession() {
+        const zone1Input = document.getElementById('zone1').value;
+        const zone2Input = document.getElementById('zone2').value;
+        const zone3Input = document.getElementById('zone3').value;
+        const zone4Input = document.getElementById('zone4').value;
+        const zone5Input = document.getElementById('zone5').value;
+
+        const zone1 = timeStringToSeconds(zone1Input) || 0;
+        const zone2 = timeStringToSeconds(zone2Input) || 0;
+        const zone3 = timeStringToSeconds(zone3Input) || 0;
+        const zone4 = timeStringToSeconds(zone4Input) || 0;
+        const zone5 = timeStringToSeconds(zone5Input) || 0;
+
+        const total = zone1 + zone2 + zone3 + zone4 + zone5;
+
+        if (total === 0) {
+            alert("Veuillez entrer des valeurs pour le temps passé dans les zones.");
+            return;
+        }
+
+        // Ajouter les temps à la somme cumulative
+        cumulativeZone1 += zone1;
+        cumulativeZone2 += zone2;
+        cumulativeZone3 += zone3;
+        cumulativeZone4 += zone4;
+        cumulativeZone5 += zone5;
+
+        // Obtenir la date et l'heure actuelles
+        const now = new Date();
+        const formattedDate = formatDate(now);
+
+        // Ajouter la séance à l'historique avec la date
+        zoneSessionHistory.push({
+            zone1,
+            zone2,
+            zone3,
+            zone4,
+            zone5,
+            dateAdded: formattedDate
+        });
+
+        // Mettre à jour l'affichage de la dernière séance
+        document.getElementById('lastZoneSession').innerText = formattedDate;
+
+        // Réinitialiser les champs d'entrée
+        document.getElementById('zone1').value = '';
+        document.getElementById('zone2').value = '';
+        document.getElementById('zone3').value = '';
+        document.getElementById('zone4').value = '';
+        document.getElementById('zone5').value = '';
+
+        // Sauvegarder les données
+        saveData();
+
+        // Mettre à jour les graphiques
+        updateZoneChart();
+    }
+
+    // Fonction pour annuler la dernière séance de zones cardiaques
+    function undoLastZoneSession() {
+        if (zoneSessionHistory.length === 0) {
+            alert("Aucune séance à annuler.");
+            return;
+        }
+
+        const lastSession = zoneSessionHistory.pop();
+
+        cumulativeZone1 -= lastSession.zone1;
+        cumulativeZone2 -= lastSession.zone2;
+        cumulativeZone3 -= lastSession.zone3;
+        cumulativeZone4 -= lastSession.zone4;
+        cumulativeZone5 -= lastSession.zone5;
+
+        // Mettre à jour l'affichage de la dernière séance
+        if (zoneSessionHistory.length > 0) {
+            const previousSession = zoneSessionHistory[zoneSessionHistory.length - 1];
+            document.getElementById('lastZoneSession').innerText = previousSession.dateAdded;
+        } else {
+            document.getElementById('lastZoneSession').innerText = "Aucune séance ajoutée";
+        }
+
+        // Sauvegarder les données
+        saveData();
+
+        updateZoneChart();
+    }
+
+    // Fonction pour ajouter une séance de kilomètres
+    function addKmSession() {
+        const kmSemaineInput = parseInt(document.getElementById('kmSemaine').value);
+        const kmParcourusInput = parseFloat(document.getElementById('kmParcourus').value);
+
+        if (isNaN(kmParcourusInput) || isNaN(kmSemaineInput)) {
+            alert("Veuillez entrer un numéro de semaine valide et des kilomètres parcourus.");
+            return;
+        }
+
+        if (kmSemaineInput < 1 || kmSemaineInput > 5) {
+            alert("Le numéro de semaine doit être entre 1 et 5.");
+            return;
+        }
+
+        // Ajouter les kilomètres à la semaine correspondante
+        kmPerWeek[kmSemaineInput - 1] += kmParcourusInput;
+
+        // Obtenir la date et l'heure actuelles
+        const now = new Date();
+        const formattedDate = formatDate(now);
+
+        // Ajouter la séance à l'historique avec la date
+        kmSessionHistory.push({
+            kmSemaine: kmSemaineInput,
+            kmParcourus: kmParcourusInput,
+            dateAdded: formattedDate
+        });
+
+        // Mettre à jour l'affichage de la dernière séance
+        document.getElementById('lastKmSession').innerText = formattedDate;
+
+        // Réinitialiser les champs d'entrée
+        document.getElementById('kmSemaine').value = '';
+        document.getElementById('kmParcourus').value = '';
+
+        // Sauvegarder les données
+        saveData();
+
+        // Mettre à jour le graphique
+        updateKmChart();
+    }
+
+    // Fonction pour annuler la dernière séance de kilomètres
+    function undoLastKmSession() {
+        if (kmSessionHistory.length === 0) {
+            alert("Aucune entrée à annuler.");
+            return;
+        }
+
+        const lastSession = kmSessionHistory.pop();
+
+        if (lastSession.kmSemaine >= 1 && lastSession.kmSemaine <= 5) {
+            kmPerWeek[lastSession.kmSemaine - 1] -= lastSession.kmParcourus;
+        }
+
+        // Mettre à jour l'affichage de la dernière séance
+        if (kmSessionHistory.length > 0) {
+            const previousSession = kmSessionHistory[kmSessionHistory.length - 1];
+            document.getElementById('lastKmSession').innerText = previousSession.dateAdded;
+        } else {
+            document.getElementById('lastKmSession').innerText = "Aucune séance ajoutée";
+        }
+
+        // Sauvegarder les données
+        saveData();
+
+        updateKmChart();
+    }
+
+    // Fonction pour mettre à jour le graphique des zones
+    function updateZoneChart() {
+        const total = cumulativeZone1 + cumulativeZone2 + cumulativeZone3 + cumulativeZone4 + cumulativeZone5;
+
+        if (total === 0) {
+            if (window.zoneChartInstance) {
+                window.zoneChartInstance.destroy();
+            }
+            return;
+        }
+
+        // Regroupement des zones
+        const totalZone1_2 = cumulativeZone1 + cumulativeZone2;
+        const totalZone3 = cumulativeZone3;
+        const totalZone4_5 = cumulativeZone4 + cumulativeZone5;
+
+        const percentageZone1_2 = (totalZone1_2 / total) * 100;
+        const percentageZone3 = (totalZone3 / total) * 100;
+        const percentageZone4_5 = (totalZone4_5 / total) * 100;
+
+        // Conversion des temps en hh:mm:ss
+        const timeZone1_2 = secondsToTimeString(totalZone1_2);
+        const timeZone3 = secondsToTimeString(totalZone3);
+        const timeZone4_5 = secondsToTimeString(totalZone4_5);
+
+        // Afficher le graphique des zones
+        const ctxZone = document.getElementById('zoneChart').getContext('2d');
+        if (window.zoneChartInstance) {
+            window.zoneChartInstance.destroy();
+        }
+        window.zoneChartInstance = new Chart(ctxZone, {
+            type: 'bar',
+            data: {
+                labels: ['Zone 1-2', 'Zone 3', 'Zone 4-5'],
+                datasets: [{
+                    label: '% du temps passé',
+                    data: [percentageZone1_2.toFixed(1), percentageZone3.toFixed(1), percentageZone4_5.toFixed(1)],
+                    backgroundColor: [
+                        '#1abc9c',
+                        '#f1c40f',
+                        '#e74c3c'
+                    ],
+                    borderColor: [
+                        '#16a085',
+                        '#f39c12',
+                        '#c0392b'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                interaction: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let index = context.dataIndex;
+                                let percentage = context.parsed.y.toFixed(1) + '%';
+                                let time = '';
+                                if (index === 0) {
+                                    time = timeZone1_2;
+                                } else if (index === 1) {
+                                    time = timeZone3;
+                                } else if (index === 2) {
+                                    time = timeZone4_5;
+                                }
+                                return `${percentage} (${time})`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Répartition du temps par zone cardiaque (cumulé)'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + "%";
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Fonction pour mettre à jour le graphique des kilomètres
+    function updateKmChart() {
+        const totalKm = kmPerWeek.reduce((a, b) => a + b, 0);
+        if (totalKm === 0) {
+            if (window.kmChartInstance) {
+                window.kmChartInstance.destroy();
+            }
+            return;
+        }
+
+        const ctxKm = document.getElementById('kmChart').getContext('2d');
+        if (window.kmChartInstance) {
+            window.kmChartInstance.destroy();
+        }
+        window.kmChartInstance = new Chart(ctxKm, {
+            type: 'bar',
+            data: {
+                labels: ['Semaine 1', 'Semaine 2', 'Semaine 3', 'Semaine 4', 'Semaine 5'],
+                datasets: [{
+                    label: 'Kilomètres parcourus',
+                    data: kmPerWeek,
+                    backgroundColor: '#3498db',
+                    borderColor: '#2980b9',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Kilomètres parcourus par semaine'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + " km";
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Fonction pour sauvegarder les données dans le Local Storage
+    function saveData() {
+        const data = {
+            cumulativeZone1,
+            cumulativeZone2,
+            cumulativeZone3,
+            cumulativeZone4,
+            cumulativeZone5,
+            zoneSessionHistory,
+            kmPerWeek,
+            kmSessionHistory
+        };
+        localStorage.setItem('trainingData', JSON.stringify(data));
+    }
+
+    // Fonction pour charger les données depuis le Local Storage
+    function loadData() {
+        const dataString = localStorage.getItem('trainingData');
+        if (dataString) {
+            const data = JSON.parse(dataString);
+            cumulativeZone1 = data.cumulativeZone1 || 0;
+            cumulativeZone2 = data.cumulativeZone2 || 0;
+            cumulativeZone3 = data.cumulativeZone3 || 0;
+            cumulativeZone4 = data.cumulativeZone4 || 0;
+            cumulativeZone5 = data.cumulativeZone5 || 0;
+            zoneSessionHistory = data.zoneSessionHistory || [];
+            kmPerWeek = data.kmPerWeek || [0, 0, 0, 0, 0];
+            kmSessionHistory = data.kmSessionHistory || [];
+
+            // Mettre à jour l'affichage de la dernière séance de zones
+            if (zoneSessionHistory.length > 0) {
+                const lastZoneSession = zoneSessionHistory[zoneSessionHistory.length - 1];
+                document.getElementById('lastZoneSession').innerText = lastZoneSession.dateAdded;
+            } else {
+                document.getElementById('lastZoneSession').innerText = "Aucune séance ajoutée";
+            }
+
+            // Mettre à jour l'affichage de la dernière séance de kilomètres
+            if (kmSessionHistory.length > 0) {
+                const lastKmSession = kmSessionHistory[kmSessionHistory.length - 1];
+                document.getElementById('lastKmSession').innerText = lastKmSession.dateAdded;
+            } else {
+                document.getElementById('lastKmSession').innerText = "Aucune séance ajoutée";
+            }
+
+            updateZoneChart();
+            updateKmChart();
+        }
+    }
+</script>
+
+</body>
+</html>
