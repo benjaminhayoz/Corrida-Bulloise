@@ -270,7 +270,7 @@
         <h3><span>⚡</span> VMA Courte - Jeudi</h3>
         <div class="details">
             <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
-            <p><strong>Exercice principal :</strong> 6 x 400 m à 100% VMA (3:37 min/km) avec 2 min de récupération en trottinant.</p>
+            <p><strong>Exercice principal :</strong> 8 x 400 m à 100% VMA (3:37 min/km) avec 1 min de récupération en trottinant.</p>
             <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
             <p><strong>Objectif :</strong> Améliorer la VMA et la capacité aérobie.</p>
         </div>
@@ -281,8 +281,8 @@
         <div class="details">
             <p><strong>Contenu :</strong></p>
             <ul>
-                <li>7 km en EF (zones 1-2)</li>
-                <li>4 km à allure spécifique (4:03 min/km)</li>
+                <li>4 km en EF (zones 1-2)</li>
+                <li>2 x 2 km à allure spécifique (4:03 min/km) avec 2 minutes de récupération </li>
                 <li>10 min de retour au calme en EF (~1.5 km)</li>
             </ul>
             <p><strong>Objectif :</strong> Habituer votre corps à l'allure de course et récupérer activement.</p>
@@ -307,7 +307,7 @@
         <h3><span>🚀</span> Seuil - Jeudi</h3>
         <div class="details">
             <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
-            <p><strong>Exercice principal :</strong> 25 min à allure seuil (4:33 min/km) (~5.5 km).</p>
+            <p><strong>Exercice principal :</strong> 2 x 15 min à allure seuil (entre 170-177bpm).</p>
             <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
             <p><strong>Objectif :</strong> Améliorer le seuil lactique.</p>
         </div>
@@ -403,7 +403,7 @@
     <!-- Section pour le temps passé dans les zones cardiaques -->
     <div class="analysis-section">
         <div class="session-counter">
-            <p>Nombre de séances (zones cardiaques) : <span id="sessionCountZones">0</span></p>
+            <p>Dernière séance ajoutée : <span id="lastZoneSession">Aucune séance ajoutée</span></p>
         </div>
         <div class="analysis-input">
             <h3>Temps passé dans chaque zone cardiaque :</h3>
@@ -430,7 +430,7 @@
     <!-- Section pour les kilomètres parcourus par semaine -->
     <div class="analysis-section">
         <div class="session-counter">
-            <p>Nombre de séances (kilomètres) : <span id="sessionCountKm">0</span></p>
+            <p>Dernière séance ajoutée : <span id="lastKmSession">Aucune séance ajoutée</span></p>
         </div>
         <div class="analysis-input">
             <h3>Kilomètres parcourus par semaine :</h3>
@@ -481,12 +481,12 @@
     let cumulativeZone3 = 0;
     let cumulativeZone4 = 0;
     let cumulativeZone5 = 0;
-    let sessionCountZones = 0;
+    // let sessionCountZones = 0; // Supprimé
     let zoneSessionHistory = [];
 
     // Variables pour les kilomètres par semaine
     let kmPerWeek = [0, 0, 0, 0, 0];
-    let sessionCountKm = 0;
+    // let sessionCountKm = 0; // Supprimé
     let kmSessionHistory = [];
 
     // Charger les données depuis le Local Storage
@@ -517,6 +517,16 @@
         return `${h}:${m}:${s}`;
     }
 
+    // Fonction pour formater la date en "dd.mm.yyyy à hh:mm"
+    function formatDate(date) {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${day}.${month}.${year} à ${hours}:${minutes}`;
+    }
+
     // Fonction pour ajouter une séance de zones cardiaques
     function addZoneSession() {
         const zone1Input = document.getElementById('zone1').value;
@@ -545,18 +555,22 @@
         cumulativeZone4 += zone4;
         cumulativeZone5 += zone5;
 
-        // Ajouter la séance à l'historique
+        // Obtenir la date et l'heure actuelles
+        const now = new Date();
+        const formattedDate = formatDate(now);
+
+        // Ajouter la séance à l'historique avec la date
         zoneSessionHistory.push({
             zone1,
             zone2,
             zone3,
             zone4,
-            zone5
+            zone5,
+            dateAdded: formattedDate
         });
 
-        // Mettre à jour le compteur de séances
-        sessionCountZones++;
-        document.getElementById('sessionCountZones').innerText = sessionCountZones;
+        // Mettre à jour l'affichage de la dernière séance
+        document.getElementById('lastZoneSession').innerText = formattedDate;
 
         // Réinitialiser les champs d'entrée
         document.getElementById('zone1').value = '';
@@ -587,8 +601,13 @@
         cumulativeZone4 -= lastSession.zone4;
         cumulativeZone5 -= lastSession.zone5;
 
-        sessionCountZones--;
-        document.getElementById('sessionCountZones').innerText = sessionCountZones;
+        // Mettre à jour l'affichage de la dernière séance
+        if (zoneSessionHistory.length > 0) {
+            const previousSession = zoneSessionHistory[zoneSessionHistory.length - 1];
+            document.getElementById('lastZoneSession').innerText = previousSession.dateAdded;
+        } else {
+            document.getElementById('lastZoneSession').innerText = "Aucune séance ajoutée";
+        }
 
         // Sauvegarder les données
         saveData();
@@ -614,15 +633,19 @@
         // Ajouter les kilomètres à la semaine correspondante
         kmPerWeek[kmSemaineInput - 1] += kmParcourusInput;
 
-        // Ajouter la séance à l'historique
+        // Obtenir la date et l'heure actuelles
+        const now = new Date();
+        const formattedDate = formatDate(now);
+
+        // Ajouter la séance à l'historique avec la date
         kmSessionHistory.push({
             kmSemaine: kmSemaineInput,
-            kmParcourus: kmParcourusInput
+            kmParcourus: kmParcourusInput,
+            dateAdded: formattedDate
         });
 
-        // Mettre à jour le compteur de séances
-        sessionCountKm++;
-        document.getElementById('sessionCountKm').innerText = sessionCountKm;
+        // Mettre à jour l'affichage de la dernière séance
+        document.getElementById('lastKmSession').innerText = formattedDate;
 
         // Réinitialiser les champs d'entrée
         document.getElementById('kmSemaine').value = '';
@@ -648,8 +671,13 @@
             kmPerWeek[lastSession.kmSemaine - 1] -= lastSession.kmParcourus;
         }
 
-        sessionCountKm--;
-        document.getElementById('sessionCountKm').innerText = sessionCountKm;
+        // Mettre à jour l'affichage de la dernière séance
+        if (kmSessionHistory.length > 0) {
+            const previousSession = kmSessionHistory[kmSessionHistory.length - 1];
+            document.getElementById('lastKmSession').innerText = previousSession.dateAdded;
+        } else {
+            document.getElementById('lastKmSession').innerText = "Aucune séance ajoutée";
+        }
 
         // Sauvegarder les données
         saveData();
@@ -805,10 +833,8 @@
             cumulativeZone3,
             cumulativeZone4,
             cumulativeZone5,
-            sessionCountZones,
             zoneSessionHistory,
             kmPerWeek,
-            sessionCountKm,
             kmSessionHistory
         };
         localStorage.setItem('trainingData', JSON.stringify(data));
@@ -824,14 +850,25 @@
             cumulativeZone3 = data.cumulativeZone3 || 0;
             cumulativeZone4 = data.cumulativeZone4 || 0;
             cumulativeZone5 = data.cumulativeZone5 || 0;
-            sessionCountZones = data.sessionCountZones || 0;
             zoneSessionHistory = data.zoneSessionHistory || [];
             kmPerWeek = data.kmPerWeek || [0, 0, 0, 0, 0];
-            sessionCountKm = data.sessionCountKm || 0;
             kmSessionHistory = data.kmSessionHistory || [];
 
-            document.getElementById('sessionCountZones').innerText = sessionCountZones;
-            document.getElementById('sessionCountKm').innerText = sessionCountKm;
+            // Mettre à jour l'affichage de la dernière séance de zones
+            if (zoneSessionHistory.length > 0) {
+                const lastZoneSession = zoneSessionHistory[zoneSessionHistory.length - 1];
+                document.getElementById('lastZoneSession').innerText = lastZoneSession.dateAdded;
+            } else {
+                document.getElementById('lastZoneSession').innerText = "Aucune séance ajoutée";
+            }
+
+            // Mettre à jour l'affichage de la dernière séance de kilomètres
+            if (kmSessionHistory.length > 0) {
+                const lastKmSession = kmSessionHistory[kmSessionHistory.length - 1];
+                document.getElementById('lastKmSession').innerText = lastKmSession.dateAdded;
+            } else {
+                document.getElementById('lastKmSession').innerText = "Aucune séance ajoutée";
+            }
 
             updateZoneChart();
             updateKmChart();
