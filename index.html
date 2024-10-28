@@ -105,6 +105,47 @@
             background-color: #ecf0f1;
         }
 
+        /* Styles pour l'édition */
+        .edit-button, .save-button, .cancel-button, .delete-button {
+            margin: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            border: none;
+            border-radius: 3px;
+        }
+
+        .edit-button {
+            background-color: #e67e22;
+            color: #fff;
+        }
+
+        .save-button {
+            background-color: #27ae60;
+            color: #fff;
+        }
+
+        .cancel-button {
+            background-color: #95a5a6;
+            color: #fff;
+        }
+
+        .delete-button {
+            background-color: #c0392b;
+            color: #fff;
+        }
+
+        /* Styles pour le formulaire d'édition */
+        .edit-form input, .edit-form textarea {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 5px;
+        }
+
+        .edit-form label {
+            font-weight: bold;
+        }
+
         /* Styles pour l'analyse */
         .analysis-section {
             margin-top: 20px;
@@ -219,181 +260,40 @@
 <div id="Semaine1" class="tabcontent active">
     <h2>Semaine 1 (13 - 19 octobre)</h2>
     <h3>Total approximatif : 23 km</h3>
-    <!-- Mardi -->
-    <div class="session">
-        <h3><span>❤️</span> Endurance Fondamentale - Mardi</h3>
-        <div class="details">
-            <p><strong>Contenu :</strong> 7 km en endurance fondamentale (zones 1-2).</p>
-            <p><strong>Objectif :</strong> Travailler l'endurance de base.</p>
-        </div>
-    </div>
-    <!-- Jeudi -->
-    <div class="session">
-        <h3><span>⚡</span> VMA Courte + Allure Course - Jeudi</h3>
-        <div class="details">
-            <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
-            <p><strong>Exercice principal :</strong> 8 x 200 m à 105% VMA (3:26 min/km) avec 1 min de récupération en trottinant.</p>
-            <p><strong>Allure Course :</strong> 1 km à allure cible (4:03 min/km).</p>
-            <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
-            <p><strong>Objectif :</strong> Améliorer la VMA et se familiariser avec l'allure de course.</p>
-        </div>
-    </div>
-    <!-- Dimanche -->
-    <div class="session">
-        <h3><span>🏃‍♂️</span> Sortie Longue avec Allure de Course - Dimanche</h3>
-        <div class="details">
-            <p><strong>Contenu :</strong></p>
-            <ul>
-                <li>5 km en EF (zones 1-2)</li>
-                <li>2 km à allure de course (4:03 min/km)</li>
-                <li>10 min de retour au calme en EF (~1.5 km)</li>
-            </ul>
-            <p><strong>Objectif :</strong> Habituer le corps à l'allure de course en fin de sortie longue et récupérer activement.</p>
-        </div>
-    </div>
+    <button class="edit-button" onclick="addSession('Semaine1')">Ajouter une séance</button>
+    <div id="sessionsSemaine1"></div>
 </div>
 
 <!-- Semaine 2 -->
 <div id="Semaine2" class="tabcontent">
     <h2>Semaine 2 (20 - 26 octobre)</h2>
     <h3>Total approximatif : 26 km</h3>
-    <!-- Mardi -->
-    <div class="session">
-        <h3><span>❤️</span> Endurance Fondamentale - Mardi</h3>
-        <div class="details">
-            <p><strong>Contenu :</strong> 8 km en endurance fondamentale (zones 1-2).</p>
-            <p><strong>Objectif :</strong> Travailler l'endurance de base.</p>
-        </div>
-    </div>
-    <!-- Jeudi -->
-    <div class="session">
-        <h3><span>⚡</span> VMA Courte - Jeudi</h3>
-        <div class="details">
-            <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
-            <p><strong>Exercice principal :</strong> 8 x 400 m à 100% VMA (3:37 min/km) avec 1 min de récupération en trottinant.</p>
-            <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
-            <p><strong>Objectif :</strong> Améliorer la VMA et la capacité aérobie.</p>
-        </div>
-    </div>
-    <!-- Dimanche -->
-    <div class="session">
-        <h3><span>🏃‍♂️</span> Sortie Longue avec Allure Spécifique - Dimanche</h3>
-        <div class="details">
-            <p><strong>Contenu :</strong></p>
-            <ul>
-                <li>4 km en EF (zones 1-2)</li>
-                <li>2 x 2 km à allure spécifique (4:03 min/km) avec 2 minutes de récupération </li>
-                <li>10 min de retour au calme en EF (~1.5 km)</li>
-            </ul>
-            <p><strong>Objectif :</strong> Habituer votre corps à l'allure de course et récupérer activement.</p>
-        </div>
-    </div>
+    <button class="edit-button" onclick="addSession('Semaine2')">Ajouter une séance</button>
+    <div id="sessionsSemaine2"></div>
 </div>
 
 <!-- Semaine 3 -->
 <div id="Semaine3" class="tabcontent">
     <h2>Semaine 3 (27 octobre - 2 novembre)</h2>
-    <h3>Total approximatif : 30 km</h3>
-    <!-- Mardi -->
-    <div class="session">
-        <h3><span>❤️</span> Endurance Fondamentale - Mardi</h3>
-        <div class="details">
-            <p><strong>Contenu :</strong> 10 km en endurance fondamentale (zones 1-2).</p>
-            <p><strong>Objectif :</strong> Augmenter le volume d'entraînement.</p>
-        </div>
-    </div>
-    <!-- Jeudi -->
-    <div class="session">
-        <h3><span>🚀</span> Seuil - Jeudi</h3>
-        <div class="details">
-            <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
-            <p><strong>Exercice principal :</strong> 2 x 15 min à allure seuil (entre 170-177bpm).</p>
-            <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
-            <p><strong>Objectif :</strong> Améliorer le seuil lactique.</p>
-        </div>
-    </div>
-    <!-- Dimanche -->
-    <div class="session">
-        <h3><span>🏃‍♂️</span> Sortie Longue avec Allure Spécifique - Dimanche</h3>
-        <div class="details">
-            <p><strong>Contenu :</strong></p>
-            <ul>
-                <li>9 km en EF (zones 1-2)</li>
-                <li>5 km à allure spécifique (4:03 min/km)</li>
-                <li>10 min de retour au calme en EF (~1.5 km)</li>
-            </ul>
-            <p><strong>Objectif :</strong> Renforcer l'endurance et travailler l'allure de course.</p>
-        </div>
-    </div>
+    <h3>Total approximatif : 31 km</h3>
+    <button class="edit-button" onclick="addSession('Semaine3')">Ajouter une séance</button>
+    <div id="sessionsSemaine3"></div>
 </div>
 
 <!-- Semaine 4 -->
 <div id="Semaine4" class="tabcontent">
     <h2>Semaine 4 (3 - 9 novembre)</h2>
-    <h3>Total approximatif : 35 km</h3>
-    <!-- Mardi -->
-    <div class="session">
-        <h3><span>❤️</span> Endurance Fondamentale - Mardi</h3>
-        <div class="details">
-            <p><strong>Contenu :</strong> 12 km en endurance fondamentale (zones 1-2).</p>
-            <p><strong>Objectif :</strong> Atteindre le volume maximal tout en restant en basse intensité.</p>
-        </div>
-    </div>
-    <!-- Jeudi -->
-    <div class="session">
-        <h3><span>⚡</span> VMA Longue - Jeudi</h3>
-        <div class="details">
-            <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
-            <p><strong>Exercice principal :</strong> 5 x 800 m à 95% VMA (3:48 min/km) avec 3 min de récupération en trottinant.</p>
-            <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
-            <p><strong>Objectif :</strong> Améliorer la capacité à maintenir une allure rapide sur une distance plus longue.</p>
-        </div>
-    </div>
-    <!-- Dimanche -->
-    <div class="session">
-        <h3><span>🏃‍♂️</span> Sortie Longue avec Seuil - Dimanche</h3>
-        <div class="details">
-            <p><strong>Contenu :</strong></p>
-            <ul>
-                <li>12 km en EF (zones 1-2)</li>
-                <li>5 km à allure seuil (4:33 min/km)</li>
-                <li>10 min de retour au calme en EF (~1.5 km)</li>
-            </ul>
-            <p><strong>Objectif :</strong> Travailler l'endurance et la résistance à l'effort intense.</p>
-        </div>
-    </div>
+    <h3>Total approximatif : 32 km</h3>
+    <button class="edit-button" onclick="addSession('Semaine4')">Ajouter une séance</button>
+    <div id="sessionsSemaine4"></div>
 </div>
 
 <!-- Semaine 5 -->
 <div id="Semaine5" class="tabcontent">
     <h2>Semaine 5 (10 - 16 novembre)</h2>
-    <h3>Total approximatif : 23 km</h3>
-    <!-- Mardi -->
-    <div class="session">
-        <h3><span>❤️</span> Endurance Fondamentale - Mardi</h3>
-        <div class="details">
-            <p><strong>Contenu :</strong> 6 km en endurance fondamentale (zones 1-2).</p>
-            <p><strong>Objectif :</strong> Commencer la phase de relâchement pour être en forme le jour de la course.</p>
-        </div>
-    </div>
-    <!-- Jeudi -->
-    <div class="session">
-        <h3><span>🏁</span> Préparation Course - Jeudi</h3>
-        <div class="details">
-            <p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p>
-            <p><strong>Exercice principal :</strong> 3 x 200 m à allure spécifique (4:03 min/km) avec 2 min de récupération en trottinant.</p>
-            <p><strong>Retour au calme :</strong> 10 min en EF (~1.5 km).</p>
-            <p><strong>Objectif :</strong> Maintenir la vivacité sans accumuler de fatigue.</p>
-        </div>
-    </div>
-    <!-- Dimanche -->
-    <div class="session">
-        <h3><span>🏅</span> Corrida Bulloise - Dimanche</h3>
-        <div class="details">
-            <p><strong>Course :</strong> 8,4 km à allure cible de 4:03 min/km.</p>
-            <p><strong>Conseil :</strong> Gérer votre énergie, rester hydraté et profiter de l'ambiance de la course. Bonne chance !</p>
-        </div>
-    </div>
+    <h3>Total approximatif : 23 km (incluant la course)</h3>
+    <button class="edit-button" onclick="addSession('Semaine5')">Ajouter une séance</button>
+    <div id="sessionsSemaine5"></div>
 </div>
 
 <!-- Analyse -->
@@ -450,30 +350,281 @@
 </div>
 
 <script>
+    // Données initiales des séances
+    let sessionsData = {
+        'Semaine1': [
+            {
+                title: '❤️ Endurance Fondamentale - Mardi',
+                details: '<p><strong>Contenu :</strong> 7 km en endurance fondamentale (zones 1-2).</p><p><strong>Objectif :</strong> Travailler l\'endurance de base.</p>'
+            },
+            {
+                title: '⚡ VMA Courte + Allure Course - Jeudi',
+                details: '<p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p><p><strong>Exercice principal :</strong> 8 x 200 m à 105% VMA (3:26 min/km) avec 1 min de récupération en trottinant.</p><p><strong>Allure Course :</strong> 1 km à allure cible (4:03 min/km).</p><p><strong>Retour au calme :</strong> 10 min en EF (~1,5 km).</p><p><strong>Objectif :</strong> Améliorer la VMA et se familiariser avec l\'allure de course.</p>'
+            },
+            {
+                title: '🏃‍♂️ Sortie Longue avec Allure de Course - Dimanche',
+                details: '<p><strong>Contenu :</strong></p><ul><li>5 km en EF (zones 1-2)</li><li>2 km à allure de course (4:03 min/km)</li><li>10 min de retour au calme en EF (~1,5 km)</li></ul><p><strong>Objectif :</strong> Habituer le corps à l\'allure de course en fin de sortie longue et récupérer activement.</p>'
+            }
+        ],
+        // Données pour les autres semaines...
+        // Semaine 2
+        'Semaine2': [
+            {
+                title: '❤️ Endurance Fondamentale - Mardi',
+                details: '<p><strong>Contenu :</strong> 8 km en endurance fondamentale (zones 1-2).</p><p><strong>Objectif :</strong> Travailler l\'endurance de base.</p>'
+            },
+            {
+                title: '⚡ VMA Courte - Jeudi',
+                details: '<p><strong>Échauffement :</strong> 15 min en EF (~2 km).</p><p><strong>Exercice principal :</strong> 8 x 400 m à 100% VMA (3:37 min/km) avec 1 min de récupération en trottinant.</p><p><strong>Retour au calme :</strong> 10 min en EF (~1,5 km).</p><p><strong>Objectif :</strong> Améliorer la VMA et la capacité aérobie.</p>'
+            },
+            {
+                title: '🏃‍♂️ Sortie Longue avec Allure Spécifique - Dimanche',
+                details: '<p><strong>Contenu :</strong></p><ul><li>4 km en EF (zones 1-2)</li><li>2 x 2 km à allure spécifique (4:03 min/km) avec 2 minutes de récupération</li><li>10 min de retour au calme en EF (~1,5 km)</li></ul><p><strong>Objectif :</strong> Habituer votre corps à l\'allure de course et récupérer activement.</p>'
+            }
+        ],
+        // Semaine 3
+        'Semaine3': [
+            {
+                title: '❤️ Endurance Fondamentale - Mardi',
+                details: '<p><strong>Contenu :</strong> 9 km en endurance fondamentale (zones 1-2) à 6\'00" - 6\'15"/km.</p><p><strong>Objectif :</strong> Augmenter légèrement le volume tout en travaillant l\'endurance de base.</p>'
+            },
+            {
+                title: '⚡ Intervalles Moyens - Jeudi',
+                details: '<p><strong>Échauffement :</strong> 15 min en EF (~2,5 km) à 6\'00"/km.</p><p><strong>Exercice principal :</strong></p><ul><li>6 x 600 m à 95-100% VMA (entre 3\'36" et 3\'48"/km)</li><li>Récupération : 1\'30" en trottinant (~200 m) entre chaque répétition</li></ul><p><strong>Retour au calme :</strong> 10 min en EF (~1,5 km) à 7\'00"/km.</p><p><strong>Objectif :</strong> Travailler la VMA longue et la capacité à maintenir une allure rapide sur une distance plus longue.</p>'
+            },
+            {
+                title: '🏃‍♂️ Sortie Longue avec Allure Spécifique - Dimanche',
+                details: '<p><strong>Contenu :</strong></p><ul><li>8 km en EF (zones 1-2) à 6\'00" - 6\'15"/km</li><li>3 x 1 km à allure spécifique (4\'03"/km) avec 2 min de récupération en trottinant</li><li>10 min de retour au calme en EF (~1,5 km) à 7\'00"/km</li></ul><p><strong>Objectif :</strong> Maintenir un travail à allure spécifique sans accumuler trop de fatigue avant la séance test.</p>'
+            }
+        ],
+        // Semaine 4
+        'Semaine4': [
+            {
+                title: '📝 Séance de Fractionné Test - Mardi',
+                details: '<p><strong>Échauffement :</strong> 15 min en EF (~2,5 km) à 6\'00"/km, suivies de gammes et accélérations.</p><p><strong>Exercice principal :</strong></p><ul><li>3 000 m à allure cible (4\'03"/km)</li><li>Récupération : 1\'30" en footing (~200 m)</li><li>2 000 m à allure cible</li><li>Récupération : 1\'30" en footing (~200 m)</li><li>1 000 m à allure cible</li></ul><p><strong>Retour au calme :</strong> 10 min en EF (~1,5 km) à 7\'00"/km.</p><p><strong>Objectif :</strong> Valider votre allure de course et simuler la gestion de l\'effort.</p>'
+            },
+            {
+                title: '❤️ Endurance Fondamentale - Jeudi',
+                details: '<p><strong>Contenu :</strong> 8 km en endurance fondamentale (zones 1-2) à 6\'00" - 6\'15"/km.</p><p><strong>Objectif :</strong> Favoriser la récupération active après la séance test.</p>'
+            },
+            {
+                title: '🌳 Sortie Longue Légère - Dimanche',
+                details: '<p><strong>Contenu :</strong> 10 km en endurance fondamentale à 6\'00" - 6\'15"/km.</p><p><strong>Objectif :</strong> Maintenir l\'endurance sans accumuler de fatigue avant la phase de réduction.</p>'
+            }
+        ],
+        // Semaine 5
+        'Semaine5': [
+            {
+                title: '✨ Footing avec Rappel d\'Allure - Mardi',
+                details: '<p><strong>Échauffement :</strong> 15 min en EF (~2,5 km) à 6\'00"/km.</p><p><strong>Exercice principal :</strong></p><ul><li>3 x 500 m à allure spécifique (4\'03"/km) avec 2 min de récupération en trottinant</li></ul><p><strong>Retour au calme :</strong> 10 min en EF (~1,5 km) à 7\'00"/km.</p><p><strong>Objectif :</strong> Maintenir la vivacité et l\'allure cible sans générer de fatigue.</p>'
+            },
+            {
+                title: '🛌 Endurance Fondamentale Courte - Jeudi',
+                details: '<p><strong>Contenu :</strong> 5 km en endurance fondamentale à 6\'15"/km.</p><p><strong>Objectif :</strong> Favoriser la récupération et la fraîcheur musculaire.</p>'
+            },
+            {
+                title: '🏅 Corrida Bulloise - Dimanche',
+                details: '<p><strong>Échauffement Avant la Course :</strong></p><ul><li>15 min en EF (~2,5 km) à 6\'00"/km</li><li>Quelques accélérations progressives pour préparer le corps</li></ul><p><strong>Course :</strong></p><ul><li>Distance : 8,4 km</li><li>Allure cible : 4\'03"/km</li></ul><p><strong>Conseil :</strong> Gérez bien votre énergie, suivez votre allure dès le départ et profitez de l\'ambiance pour vous dépasser. Bonne chance !</p>'
+            }
+        ]
+    };
+
+    // Fonction pour afficher les séances
+    function displaySessions(semaineId) {
+        const sessionsContainer = document.getElementById('sessions' + semaineId);
+        sessionsContainer.innerHTML = '';
+        const sessions = sessionsData[semaineId] || [];
+        sessions.forEach((session, index) => {
+            const sessionDiv = document.createElement('div');
+            sessionDiv.className = 'session';
+
+            const h3 = document.createElement('h3');
+            h3.innerHTML = `<span>${session.title.split(' ')[0]}</span>${session.title.split(' ').slice(1).join(' ')}`;
+            h3.onclick = () => {
+                detailsDiv.style.display = detailsDiv.style.display === 'block' ? 'none' : 'block';
+            };
+
+            const detailsDiv = document.createElement('div');
+            detailsDiv.className = 'details';
+            detailsDiv.innerHTML = session.details;
+
+            const editBtn = document.createElement('button');
+            editBtn.className = 'edit-button';
+            editBtn.textContent = 'Modifier';
+            editBtn.onclick = () => editSession(semaineId, index, sessionDiv);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-button';
+            deleteBtn.textContent = 'Supprimer';
+            deleteBtn.onclick = () => deleteSession(semaineId, index);
+
+            sessionDiv.appendChild(h3);
+            sessionDiv.appendChild(detailsDiv);
+            sessionDiv.appendChild(editBtn);
+            sessionDiv.appendChild(deleteBtn);
+
+            sessionsContainer.appendChild(sessionDiv);
+        });
+    }
+
+    // Initialiser l'affichage des séances
+    function initSessions() {
+        for (let i = 1; i <= 5; i++) {
+            displaySessions('Semaine' + i);
+        }
+    }
+
+    // Fonction pour modifier une séance
+    function editSession(semaineId, index, sessionDiv) {
+        const session = sessionsData[semaineId][index];
+        sessionDiv.innerHTML = '';
+
+        const form = document.createElement('div');
+        form.className = 'edit-form';
+
+        const titleLabel = document.createElement('label');
+        titleLabel.textContent = 'Titre :';
+        const titleInput = document.createElement('input');
+        titleInput.type = 'text';
+        titleInput.value = session.title;
+
+        const detailsLabel = document.createElement('label');
+        detailsLabel.textContent = 'Détails :';
+        const detailsTextarea = document.createElement('textarea');
+        detailsTextarea.rows = 10;
+        detailsTextarea.value = session.details.replace(/<\/?p>/g, '').replace(/<\/?ul>/g, '').replace(/<\/?li>/g, '');
+
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'save-button';
+        saveBtn.textContent = 'Enregistrer';
+        saveBtn.onclick = () => {
+            session.title = titleInput.value;
+            session.details = detailsTextarea.value;
+            saveData();
+            displaySessions(semaineId);
+        };
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'cancel-button';
+        cancelBtn.textContent = 'Annuler';
+        cancelBtn.onclick = () => {
+            displaySessions(semaineId);
+        };
+
+        form.appendChild(titleLabel);
+        form.appendChild(titleInput);
+        form.appendChild(detailsLabel);
+        form.appendChild(detailsTextarea);
+        form.appendChild(saveBtn);
+        form.appendChild(cancelBtn);
+
+        sessionDiv.appendChild(form);
+    }
+
+    // Fonction pour ajouter une séance
+    function addSession(semaineId) {
+        const sessions = sessionsData[semaineId] || [];
+        sessions.push({
+            title: 'Nouvelle Séance',
+            details: '<p><strong>Contenu :</strong></p><p><strong>Objectif :</strong></p>'
+        });
+        sessionsData[semaineId] = sessions;
+        saveData();
+        displaySessions(semaineId);
+    }
+
+    // Fonction pour supprimer une séance
+    function deleteSession(semaineId, index) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cette séance ?')) {
+            sessionsData[semaineId].splice(index, 1);
+            saveData();
+            displaySessions(semaineId);
+        }
+    }
+
     // Gestion des onglets
     function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
+        tabcontent = document.getElementsByClassName('tabcontent');
         for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].classList.remove("active");
+            tabcontent[i].classList.remove('active');
         }
-        tablinks = document.getElementsByClassName("tablinks");
+        tablinks = document.getElementsByClassName('tablinks');
         for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("active");
+            tablinks[i].classList.remove('active');
         }
-        document.getElementById(tabName).classList.add("active");
-        evt.currentTarget.classList.add("active");
+        document.getElementById(tabName).classList.add('active');
+        evt.currentTarget.classList.add('active');
     }
 
-    // Affichage des détails des séances
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.session h3').forEach(sessionHeader => {
-            sessionHeader.addEventListener('click', () => {
-                const details = sessionHeader.nextElementSibling;
-                details.style.display = details.style.display === 'block' ? 'none' : 'block';
-            });
-        });
-    });
+    // Sauvegarder les données dans le Local Storage
+    function saveData() {
+        localStorage.setItem('sessionsData', JSON.stringify(sessionsData));
+        localStorage.setItem('zoneSessionHistory', JSON.stringify(zoneSessionHistory));
+        localStorage.setItem('kmSessionHistory', JSON.stringify(kmSessionHistory));
+        localStorage.setItem('cumulativeZones', JSON.stringify({
+            cumulativeZone1,
+            cumulativeZone2,
+            cumulativeZone3,
+            cumulativeZone4,
+            cumulativeZone5
+        }));
+        localStorage.setItem('kmPerWeek', JSON.stringify(kmPerWeek));
+    }
+
+    // Charger les données depuis le Local Storage
+    function loadData() {
+        const sessionsDataString = localStorage.getItem('sessionsData');
+        if (sessionsDataString) {
+            sessionsData = JSON.parse(sessionsDataString);
+        }
+        initSessions();
+
+        // Charger les données d'analyse
+        const cumulativeZonesString = localStorage.getItem('cumulativeZones');
+        if (cumulativeZonesString) {
+            const cumulativeZones = JSON.parse(cumulativeZonesString);
+            cumulativeZone1 = cumulativeZones.cumulativeZone1 || 0;
+            cumulativeZone2 = cumulativeZones.cumulativeZone2 || 0;
+            cumulativeZone3 = cumulativeZones.cumulativeZone3 || 0;
+            cumulativeZone4 = cumulativeZones.cumulativeZone4 || 0;
+            cumulativeZone5 = cumulativeZones.cumulativeZone5 || 0;
+        }
+
+        const zoneSessionHistoryString = localStorage.getItem('zoneSessionHistory');
+        if (zoneSessionHistoryString) {
+            zoneSessionHistory = JSON.parse(zoneSessionHistoryString);
+        }
+
+        const kmPerWeekString = localStorage.getItem('kmPerWeek');
+        if (kmPerWeekString) {
+            kmPerWeek = JSON.parse(kmPerWeekString);
+        }
+
+        const kmSessionHistoryString = localStorage.getItem('kmSessionHistory');
+        if (kmSessionHistoryString) {
+            kmSessionHistory = JSON.parse(kmSessionHistoryString);
+        }
+
+        // Mettre à jour l'affichage de la dernière séance de zones
+        if (zoneSessionHistory.length > 0) {
+            const lastZoneSession = zoneSessionHistory[zoneSessionHistory.length - 1];
+            document.getElementById('lastZoneSession').innerText = lastZoneSession.dateAdded;
+        } else {
+            document.getElementById('lastZoneSession').innerText = "Aucune séance ajoutée";
+        }
+
+        // Mettre à jour l'affichage de la dernière séance de kilomètres
+        if (kmSessionHistory.length > 0) {
+            const lastKmSession = kmSessionHistory[kmSessionHistory.length - 1];
+            document.getElementById('lastKmSession').innerText = lastKmSession.dateAdded;
+        } else {
+            document.getElementById('lastKmSession').innerText = "Aucune séance ajoutée";
+        }
+
+        updateZoneChart();
+        updateKmChart();
+    }
 
     // Variables pour stocker les temps cumulés
     let cumulativeZone1 = 0;
@@ -481,18 +632,11 @@
     let cumulativeZone3 = 0;
     let cumulativeZone4 = 0;
     let cumulativeZone5 = 0;
-    // let sessionCountZones = 0; // Supprimé
     let zoneSessionHistory = [];
 
     // Variables pour les kilomètres par semaine
     let kmPerWeek = [0, 0, 0, 0, 0];
-    // let sessionCountKm = 0; // Supprimé
     let kmSessionHistory = [];
-
-    // Charger les données depuis le Local Storage
-    window.onload = function() {
-        loadData();
-    };
 
     // Fonction pour convertir hh:mm:ss en secondes
     function timeStringToSeconds(timeString) {
@@ -825,55 +969,10 @@
         });
     }
 
-    // Fonction pour sauvegarder les données dans le Local Storage
-    function saveData() {
-        const data = {
-            cumulativeZone1,
-            cumulativeZone2,
-            cumulativeZone3,
-            cumulativeZone4,
-            cumulativeZone5,
-            zoneSessionHistory,
-            kmPerWeek,
-            kmSessionHistory
-        };
-        localStorage.setItem('trainingData', JSON.stringify(data));
-    }
-
-    // Fonction pour charger les données depuis le Local Storage
-    function loadData() {
-        const dataString = localStorage.getItem('trainingData');
-        if (dataString) {
-            const data = JSON.parse(dataString);
-            cumulativeZone1 = data.cumulativeZone1 || 0;
-            cumulativeZone2 = data.cumulativeZone2 || 0;
-            cumulativeZone3 = data.cumulativeZone3 || 0;
-            cumulativeZone4 = data.cumulativeZone4 || 0;
-            cumulativeZone5 = data.cumulativeZone5 || 0;
-            zoneSessionHistory = data.zoneSessionHistory || [];
-            kmPerWeek = data.kmPerWeek || [0, 0, 0, 0, 0];
-            kmSessionHistory = data.kmSessionHistory || [];
-
-            // Mettre à jour l'affichage de la dernière séance de zones
-            if (zoneSessionHistory.length > 0) {
-                const lastZoneSession = zoneSessionHistory[zoneSessionHistory.length - 1];
-                document.getElementById('lastZoneSession').innerText = lastZoneSession.dateAdded;
-            } else {
-                document.getElementById('lastZoneSession').innerText = "Aucune séance ajoutée";
-            }
-
-            // Mettre à jour l'affichage de la dernière séance de kilomètres
-            if (kmSessionHistory.length > 0) {
-                const lastKmSession = kmSessionHistory[kmSessionHistory.length - 1];
-                document.getElementById('lastKmSession').innerText = lastKmSession.dateAdded;
-            } else {
-                document.getElementById('lastKmSession').innerText = "Aucune séance ajoutée";
-            }
-
-            updateZoneChart();
-            updateKmChart();
-        }
-    }
+    // Initialisation
+    window.onload = function() {
+        loadData();
+    };
 </script>
 
 </body>
